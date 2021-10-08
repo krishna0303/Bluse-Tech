@@ -29,18 +29,10 @@ class _UploadPageState extends State<UploadPage>
       TextEditingController();
   String productId = DateTime.now().millisecondsSinceEpoch.toString();
   bool uploading = false;
-  bool isupload = false;
-  File _image1;
-  File _image2;
-  File _image3;
-  int imageCount = 0;
-  String imageDownloadUrl1;
-  String imageDownloadUrl2;
-  String imageDownloadUrl3;
 
   @override
   Widget build(BuildContext context) {
-    return isupload == false
+    return file == null
         ? displayAdminHomeScreen()
         : displayAdminUploadFormScreen();
   }
@@ -124,12 +116,7 @@ class _UploadPageState extends State<UploadPage>
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 color: Colors.green,
-                // onPressed: () => takeImage(context),
-                onPressed: () {
-                  setState(() {
-                    isupload = true;
-                  });
-                },
+                onPressed: () => takeImage(context),
               ),
             ),
           ],
@@ -138,7 +125,7 @@ class _UploadPageState extends State<UploadPage>
     );
   }
 
-  takeImage1(mContext) {
+  takeImage(mContext) {
     return showDialog(
         context: mContext,
         builder: (con) {
@@ -149,19 +136,19 @@ class _UploadPageState extends State<UploadPage>
                   TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
             ),
             children: [
-              // SimpleDialogOption(
-              //   child: Text("Capture with Camera",
-              //       style: TextStyle(
-              //         color: Colors.green,
-              //       )),
-              //   onPressed: capturePhotoWithCamera,
-              // ),
+              SimpleDialogOption(
+                child: Text("Capture with Camera",
+                    style: TextStyle(
+                      color: Colors.green,
+                    )),
+                onPressed: capturePhotoWithCamera,
+              ),
               SimpleDialogOption(
                 child: Text("Select from Gallery",
                     style: TextStyle(
                       color: Colors.green,
                     )),
-                onPressed: pickPhotoFromGallery1,
+                onPressed: pickPhotoFromGallery,
               ),
               SimpleDialogOption(
                 child: Text("Cancel",
@@ -177,130 +164,24 @@ class _UploadPageState extends State<UploadPage>
         });
   }
 
-  takeImage2(mContext) {
-    return showDialog(
-        context: mContext,
-        builder: (con) {
-          return SimpleDialog(
-            title: Text(
-              "Item Image",
-              style:
-                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-            ),
-            children: [
-              // SimpleDialogOption(
-              //   child: Text("Capture with Camera",
-              //       style: TextStyle(
-              //         color: Colors.green,
-              //       )),
-              //   onPressed: capturePhotoWithCamera,
-              // ),
-              SimpleDialogOption(
-                child: Text("Select from Gallery",
-                    style: TextStyle(
-                      color: Colors.green,
-                    )),
-                onPressed: pickPhotoFromGallery2,
-              ),
-              SimpleDialogOption(
-                child: Text("Cancel",
-                    style: TextStyle(
-                      color: Colors.green,
-                    )),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  takeImage3(mContext) {
-    return showDialog(
-        context: mContext,
-        builder: (con) {
-          return SimpleDialog(
-            title: Text(
-              "Item Image",
-              style:
-                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-            ),
-            children: [
-              // SimpleDialogOption(
-              //   child: Text("Capture with Camera",
-              //       style: TextStyle(
-              //         color: Colors.green,
-              //       )),
-              //   onPressed: capturePhotoWithCamera,
-              // ),
-              SimpleDialogOption(
-                child: Text("Select from Gallery",
-                    style: TextStyle(
-                      color: Colors.green,
-                    )),
-                onPressed: pickPhotoFromGallery3,
-              ),
-              SimpleDialogOption(
-                child: Text("Cancel",
-                    style: TextStyle(
-                      color: Colors.green,
-                    )),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  // capturePhotoWithCamera() async {
-  //   Navigator.pop(context);
-  //   File imageFile = await ImagePicker.pickImage(
-  //       source: ImageSource.camera, maxHeight: 680.0, maxWidth: 970.0);
-
-  //   setState(() {
-  //     file = imageFile;
-  //   });
-  // }
-
-  pickPhotoFromGallery1() async {
+  capturePhotoWithCamera() async {
     Navigator.pop(context);
     File imageFile = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
-    );
-    String url1 = await uploadItemImage1(imageFile);
+        source: ImageSource.camera, maxHeight: 680.0, maxWidth: 970.0);
+
     setState(() {
-      _image1 = imageFile;
-      imageDownloadUrl1 = url1;
+      file = imageFile;
     });
   }
 
-  pickPhotoFromGallery2() async {
-    Navigator.pop(context);
-    File imageFile = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
-    );
-    String url2 = await uploadItemImage2(imageFile);
-
-    setState(() {
-      _image2 = imageFile;
-      imageDownloadUrl2 = url2;
-    });
-  }
-
-  pickPhotoFromGallery3() async {
+  pickPhotoFromGallery() async {
     Navigator.pop(context);
     File imageFile = await ImagePicker.pickImage(
       source: ImageSource.gallery,
     );
 
-    String url3 = await uploadItemImage3(imageFile);
-
     setState(() {
-      _image3 = imageFile;
-      imageDownloadUrl3 = url3;
+      file = imageFile;
     });
   }
 
@@ -351,60 +232,19 @@ class _UploadPageState extends State<UploadPage>
       body: ListView(
         children: [
           uploading ? circularProgress() : Text(""),
-          // Container(
-          //   height: 230.0,
-          //   width: MediaQuery.of(context).size.width * 0.8,
-          //   child: Center(
-          //     child: AspectRatio(
-          //       aspectRatio: 16 / 9,
-          //       child: Container(
-          //         decoration: BoxDecoration(
-          //             image: DecorationImage(
-          //                 image: FileImage(file), fit: BoxFit.cover)),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OutlineButton(
-                      borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.5), width: 2.5),
-                      onPressed: () {
-                        takeImage1(context);
-                      },
-                      child: _displayChild1()),
+          Container(
+            height: 230.0,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: FileImage(file), fit: BoxFit.cover)),
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OutlineButton(
-                      borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.5), width: 2.5),
-                      onPressed: () {
-                        takeImage2(context);
-                      },
-                      child: _displayChild2()),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OutlineButton(
-                    borderSide: BorderSide(
-                        color: Colors.grey.withOpacity(0.5), width: 2.5),
-                    onPressed: () {
-                      takeImage3(context);
-                    },
-                    child: _displayChild3(),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           Padding(padding: EdgeInsets.only(top: 12.0)),
           ListTile(
@@ -499,9 +339,7 @@ class _UploadPageState extends State<UploadPage>
 
   clearFormInfo() {
     setState(() {
-      _image1 = null;
-      _image2 = null;
-      _image3 = null;
+      file = null;
       _descriptionTextEditingController.clear();
       _priceTextEditingController.clear();
       _shortInfoTextEditingController.clear();
@@ -514,48 +352,22 @@ class _UploadPageState extends State<UploadPage>
       uploading = true;
     });
 
-    // String imageDownloadUrl1 = await uploadItemImage1(_image1);
-    // String imageDownloadUrl2 = await uploadItemImage2(_image2);
-    // String imageDownloadUrl3 = await uploadItemImage3(_image3);
+    String imageDownloadUrl = await uploadItemImage(file);
 
-    saveItemInfo(imageDownloadUrl1, imageDownloadUrl2, imageDownloadUrl3);
+    saveItemInfo(imageDownloadUrl);
   }
 
-  Future<String> uploadItemImage1(mFileImage) async {
-    String prod1 = productId + "k";
+  Future<String> uploadItemImage(mFileImage) async {
     final StorageReference storageReference =
         FirebaseStorage.instance.ref().child("Items");
-
     StorageUploadTask uploadTask =
-        storageReference.child("product_$prod1.jpg").putFile(mFileImage);
+        storageReference.child("product_$productId.jpg").putFile(mFileImage);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     return downloadUrl;
   }
 
-  Future<String> uploadItemImage2(mFileImage) async {
-    String prod2 = productId + "l";
-    final StorageReference storageReference =
-        FirebaseStorage.instance.ref().child("Items");
-    StorageUploadTask uploadTask =
-        storageReference.child("product_$prod2.jpg").putFile(mFileImage);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-    return downloadUrl;
-  }
-
-  Future<String> uploadItemImage3(mFileImage) async {
-    String prod3 = productId + "m";
-    final StorageReference storageReference =
-        FirebaseStorage.instance.ref().child("Items");
-    StorageUploadTask uploadTask =
-        storageReference.child("product_$prod3.jpg").putFile(mFileImage);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-    return downloadUrl;
-  }
-
-  saveItemInfo(String downloadUrl1, String downloadUrl2, String downloadUrl3) {
+  saveItemInfo(String downloadUrl) {
     final itemsRef = Firestore.instance.collection("items");
     itemsRef.document(productId).setData({
       "shortInfo": _shortInfoTextEditingController.text.trim(),
@@ -563,16 +375,12 @@ class _UploadPageState extends State<UploadPage>
       "price": int.parse(_priceTextEditingController.text),
       "publishedDate": DateTime.now(),
       "status": "available",
-      "thumbnailUrl1": downloadUrl1,
-      "thumbnailUrl2": downloadUrl2,
-      "thumbnailUrl3": downloadUrl3,
+      "thumbnailUrl": downloadUrl,
       "title": _titleTextEditingController.text.trim(),
     });
 
     setState(() {
-      _image1 = null;
-      _image2 = null;
-      _image3 = null;
+      file = null;
       uploading = false;
       productId = DateTime.now().millisecondsSinceEpoch.toString();
       _descriptionTextEditingController.clear();
@@ -580,60 +388,5 @@ class _UploadPageState extends State<UploadPage>
       _shortInfoTextEditingController.clear();
       _priceTextEditingController.clear();
     });
-    // Navigator.pop(context);
-  }
-
-  Widget _displayChild1() {
-    if (_image1 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(14, 50, 14, 50),
-        child: new Icon(
-          Icons.add,
-          color: Colors.grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _image1,
-        fit: BoxFit.fill,
-        width: double.infinity,
-      );
-    }
-  }
-
-  Widget _displayChild2() {
-    if (_image2 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(14, 50, 14, 50),
-        child: new Icon(
-          Icons.add,
-          color: Colors.grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _image2,
-        fit: BoxFit.fill,
-        width: double.infinity,
-      );
-    }
-  }
-
-  Widget _displayChild3() {
-    if (_image3 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(14, 50, 14, 50),
-        child: new Icon(
-          Icons.add,
-          color: Colors.grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _image3,
-        fit: BoxFit.fill,
-        width: double.infinity,
-      );
-    }
   }
 }

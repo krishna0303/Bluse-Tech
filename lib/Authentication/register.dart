@@ -40,26 +40,22 @@ class _RegisterState extends State<Register> {
             SizedBox(
               height: 10.0,
             ),
-            // InkWell(
-            //   onTap: _selectAndPickImage,
-            //   child: CircleAvatar(
-            //     radius: _screenWidth * 0.15,
-            //     backgroundColor: Colors.white,
-            //     backgroundImage:
-            //         _imageFile == null ? null : FileImage(_imageFile),
-            //     child: _imageFile == null
-            //         ? Icon(
-            //             Icons.add_photo_alternate,
-            //             size: _screenWidth * 0.15,
-            //             color: Colors.grey,
-            //           )
-            //         : null,
-            //   ),
-            // ),
-            // CircleAvatar(
-            //   radius: 40.0,
-            //   backgroundImage: AssetImage('images/logo.png'),
-            // ),
+            InkWell(
+              onTap: _selectAndPickImage,
+              child: CircleAvatar(
+                radius: _screenWidth * 0.15,
+                backgroundColor: Colors.white,
+                backgroundImage:
+                    _imageFile == null ? null : FileImage(_imageFile),
+                child: _imageFile == null
+                    ? Icon(
+                        Icons.add_photo_alternate,
+                        size: _screenWidth * 0.15,
+                        color: Colors.grey,
+                      )
+                    : null,
+              ),
+            ),
             SizedBox(
               height: 8.0,
             ),
@@ -123,29 +119,30 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  // Future<void> _selectAndPickImage() async {
-  //   _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-  // }
+  Future<void> _selectAndPickImage() async {
+    _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+  }
 
   Future<void> uploadAndSaveImage() async {
-    // if (_imageFile == null) {
-    //   showDialog(
-    //       context: context,
-    //       builder: (c) {
-    //         return ErrorAlertDialog(
-    //           message: "Please select an image file.",
-    //         );
-    //       });
-    // } else {
-    _passwordTextEditingController.text == _cPasswordTextEditingController.text
-        ? _emailTextEditingController.text.isNotEmpty &&
-                _passwordTextEditingController.text.isNotEmpty &&
-                _cPasswordTextEditingController.text.isNotEmpty &&
-                _nameTextEditingController.text.isNotEmpty
-            ? uploadToStorage()
-            : displayDialog("Please fill up the registration complete form..")
-        : displayDialog("Password do not match.");
-    // }
+    if (_imageFile == null) {
+      showDialog(
+          context: context,
+          builder: (c) {
+            return ErrorAlertDialog(
+              message: "Please select an image file.",
+            );
+          });
+    } else {
+      _passwordTextEditingController.text ==
+              _cPasswordTextEditingController.text
+          ? _emailTextEditingController.text.isNotEmpty &&
+                  _passwordTextEditingController.text.isNotEmpty &&
+                  _cPasswordTextEditingController.text.isNotEmpty &&
+                  _nameTextEditingController.text.isNotEmpty
+              ? uploadToStorage()
+              : displayDialog("Please fill up the registration complete form..")
+          : displayDialog("Password do not match.");
+    }
   }
 
   displayDialog(String msg) {
@@ -167,21 +164,20 @@ class _RegisterState extends State<Register> {
           );
         });
 
-    // String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-    // StorageReference storageReference =
-    //     FirebaseStorage.instance.ref().child(imageFileName);
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child(imageFileName);
 
-    // StorageUploadTask storageUploadTask = storageReference.putFile(_imageFile);
+    StorageUploadTask storageUploadTask = storageReference.putFile(_imageFile);
 
-    // StorageTaskSnapshot taskSnapshot = await storageUploadTask.onComplete;
+    StorageTaskSnapshot taskSnapshot = await storageUploadTask.onComplete;
 
-    // await taskSnapshot.ref.getDownloadURL().then((urlImage) {
-    //   userImageUrl = urlImage;
+    await taskSnapshot.ref.getDownloadURL().then((urlImage) {
+      userImageUrl = urlImage;
 
-    //   // _registerUser();
-    // });
-    _registerUser();
+      _registerUser();
+    });
   }
 
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -220,7 +216,7 @@ class _RegisterState extends State<Register> {
       "uid": fUser.uid,
       "email": fUser.email,
       "name": _nameTextEditingController.text.trim(),
-      // "url": userImageUrl,
+      "url": userImageUrl,
       EcommerceApp.userCartList: ["garbageValue"],
     });
 
@@ -229,8 +225,8 @@ class _RegisterState extends State<Register> {
         .setString(EcommerceApp.userEmail, fUser.email);
     await EcommerceApp.sharedPreferences
         .setString(EcommerceApp.userName, _nameTextEditingController.text);
-    // await EcommerceApp.sharedPreferences
-    //     .setString(EcommerceApp.userAvatarUrl, userImageUrl);
+    await EcommerceApp.sharedPreferences
+        .setString(EcommerceApp.userAvatarUrl, userImageUrl);
     await EcommerceApp.sharedPreferences
         .setStringList(EcommerceApp.userCartList, ["garbageValue"]);
   }

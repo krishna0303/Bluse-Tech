@@ -1,7 +1,7 @@
 name: bluse
 description: Bluse an Ecommerce app which can be used to sew blouse or any cloths for women.
 
-version: 1.0.0+3
+version: 1.0.0+1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -28,7 +28,6 @@ dependencies:
   chewie: ^0.12.2
   video_player: ^1.0.1
   connectivity_plus: ^0.8.1
-  youtube_player_flutter: ^7.0.0+7
 
   intl:
 

@@ -148,7 +148,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
         child: Row(
           children: [
             Image.network(
-              model.thumbnailUrl1,
+              model.thumbnailUrl,
               width: 140.0,
               height: 140.0,
             ),

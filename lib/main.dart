@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 20.0,
               ),
               Text(
-                "India's Largest & Number one Online Shop",
+                "World's Largest & Number one Online Shop",
                 style: TextStyle(color: Colors.white),
               ),
             ],

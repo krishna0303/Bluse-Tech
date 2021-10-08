@@ -2,22 +2,9 @@ import 'package:bluse/Widgets/videoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 import 'package:video_player/video_player.dart';
 
 class InstructionScreen extends StatelessWidget {
-  static String videoID = 'dFKhWe2bBkM';
-
-  // YouTube Video Full URL : https://www.youtube.com/watch?v=dFKhWe2bBkM&feature=emb_title&ab_channel=BBKiVines
-
-  YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: videoID,
-    flags: YoutubePlayerFlags(
-      autoPlay: false,
-      mute: false,
-    ),
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,27 +55,20 @@ class InstructionScreen extends StatelessWidget {
           Divider(
             color: Colors.black,
           ),
-          Container(
-            child: YoutubePlayer(
-              controller: _controller,
-              liveUIColor: Colors.amber,
-              showVideoProgressIndicator: true,
-            ),
-          ),
 
-          // VideoItems(
-          //   videoPlayerController: VideoPlayerController.asset(
-          //     'assets/video1.mp4',
-          //   ),
-          //   looping: true,
-          //   autoplay: false,
-          // ),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          // Divider(
-          //   color: Colors.black,
-          // ),
+          VideoItems(
+            videoPlayerController: VideoPlayerController.asset(
+              'assets/video1.mp4',
+            ),
+            looping: true,
+            autoplay: false,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Divider(
+            color: Colors.black,
+          ),
           // VideoItems(
           //   videoPlayerController: VideoPlayerController.network(
           //       'https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubble-gum-at-an-amusement-park-1226-large.mp4'),

@@ -9,12 +9,6 @@ import 'package:bluse/Store/storehome.dart';
 class ProductPage extends StatefulWidget {
   final ItemModel itemModel;
   ProductPage({this.itemModel});
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    print(itemModel);
-  }
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -120,80 +114,19 @@ class _ProductPageState extends State<ProductPage> {
                   // ),
                   CarouselSlider(
                     items: [
-                      // Stack(
-                      //   children: [
-                      //     Center(
-                      //       child:
-                      //           Image.network(widget.itemModel.thumbnailUrl1),
-                      //     ),
-                      //     Container(
-                      //       color: Colors.grey[300],
-                      //       child: SizedBox(
-                      //         height: 1.0,
-                      //         width: double.infinity,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // Stack(
-                      //   children: [
-                      //     Center(
-                      //       child:
-                      //           Image.network(widget.itemModel.thumbnailUrl2),
-                      //     ),
-                      //     Container(
-                      //       color: Colors.grey[300],
-                      //       child: SizedBox(
-                      //         height: 1.0,
-                      //         width: double.infinity,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // Stack(
-                      //   children: [
-                      //     Center(
-                      //       child:
-                      //           Image.network(widget.itemModel.thumbnailUrl3),
-                      //     ),
-                      //     Container(
-                      //       color: Colors.grey[300],
-                      //       child: SizedBox(
-                      //         height: 1.0,
-                      //         width: double.infinity,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      Container(
-                        margin: EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.itemModel.thumbnailUrl1),
-                            fit: BoxFit.cover,
+                      Stack(
+                        children: [
+                          Center(
+                            child: Image.network(widget.itemModel.thumbnailUrl),
                           ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.itemModel.thumbnailUrl2),
-                            fit: BoxFit.cover,
+                          Container(
+                            color: Colors.grey[300],
+                            child: SizedBox(
+                              height: 1.0,
+                              width: double.infinity,
+                            ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.itemModel.thumbnailUrl3),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        ],
                       ),
                     ],
                     options: CarouselOptions(
@@ -241,10 +174,8 @@ class _ProductPageState extends State<ProductPage> {
                     padding: EdgeInsets.only(top: 8.0),
                     child: Center(
                       child: InkWell(
-                        onTap: () {
-                          print(widget.itemModel);
-                          checkItemInCart(widget.itemModel.shortInfo, context);
-                        },
+                        onTap: () => checkItemInCart(
+                            widget.itemModel.shortInfo, context),
                         child: Container(
                           decoration: new BoxDecoration(
                             gradient: new LinearGradient(

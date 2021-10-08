@@ -66,7 +66,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
     width: width,
     child: Row(
       children: [
-        Image.network(model.thumbnailUrl1, width: 180.0,),
+        Image.network(model.thumbnailUrl, width: 180.0,),
         SizedBox(width: 10.0,),
         Expanded(
           child: Column(

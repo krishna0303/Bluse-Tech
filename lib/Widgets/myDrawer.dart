@@ -38,8 +38,10 @@ class MyDrawer extends StatelessWidget {
                     height: 160.0,
                     width: 160.0,
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('images/logo.png'),
-                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage(
+                        EcommerceApp.sharedPreferences
+                            .getString(EcommerceApp.userAvatarUrl),
+                      ),
                     ),
                   ),
                 ),
@@ -228,7 +230,7 @@ class MyDrawer extends StatelessWidget {
                   onTap: () {
                     final RenderBox box = context.findRenderObject();
                     Share.share(
-                      'https://play.google.com/store/apps/details?id=com.krishna.ladyshop',
+                      'https://play.google.com/store/apps/details?id=com.alltechstack.password_recaller',
                       subject: 'Share',
                       sharePositionOrigin:
                           box.localToGlobal(Offset.zero) & box.size,

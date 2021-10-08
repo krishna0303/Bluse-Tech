@@ -29,7 +29,6 @@ class AboutUs extends StatelessWidget {
               CircleAvatar(
                 radius: 40.0,
                 backgroundImage: AssetImage('images/logo.png'),
-                backgroundColor: Colors.white,
               ),
               SizedBox(
                 height: 10.0,
